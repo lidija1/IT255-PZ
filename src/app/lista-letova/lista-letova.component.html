@@ -1,0 +1,28 @@
+<table *ngIf="letovi">
+    <thead>
+        <tr>
+            <th>Od</th>
+            <th>destinacija</th>
+            <th>Vreme</th>
+            <th>Broj putnika</th>
+            <th>Cena</th>
+            <th>Odaberi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let letov of letovi">
+            <td>{{letov.od}}</td>
+            <td>{{letov.destinacija}}</td>
+            <td>{{letov.vreme}}</td>
+            <td>{{letov.brojputnika}}</td>
+            <td>{{letov.cena}}</td>
+            <td>
+                <button (click)="kupiKartu(letov.id)">Kupi kartu</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div *ngIf="!letovi">
+    <p>Loading...</p>
+</div>
+<router-outlet></router-outlet>

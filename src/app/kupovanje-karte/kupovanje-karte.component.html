@@ -1,0 +1,14 @@
+<div *ngIf="letovi.length > 0">
+  <h2>Karta detalji</h2>
+  <p>Od: {{ letovi[0].od }}</p>
+  <p>Do: {{ letovi[0].destinacija }}</p>
+  <p>Vreme: {{ letovi[0].vreme }}</p>
+
+  <label for="brojPutnika">Odaberite broj putnika:</label>
+  <input type="number" id="brojPutnika" [(ngModel)]="brojputnika" required>
+
+  <p>Ukupna cena: {{ ukupnaCena() }}</p>
+
+  <button (click)="kupiKartu()">Kupi kartu</button>
+</div>
+<p>mknkj</p>

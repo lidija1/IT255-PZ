@@ -1,0 +1,75 @@
+/* Add appropriate styling for the table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  /* Style loading message */
+  div[ngIf="!letovi"] p {
+    font-style: italic;
+    color: #888;
+    margin-top: 10px;
+  }
+  
+  /* Style form container */
+  form {
+    margin-top: 20px;
+  }
+  
+  /* Style form labels and inputs */
+  form label {
+    display: block;
+    margin-top: 10px;
+  }
+  
+  form input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+  }
+  
+  /* Style validation messages */
+  .validacija {
+    color: #d9534f;
+    margin-top: 5px;
+  }
+  
+  /* Style button container */
+  .button-container {
+    margin-top: 20px;
+  }
+  
+  /* Style buttons */
+  button {
+    padding: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  
+  .btndodaj {
+    background-color: #5bc0de;
+    color: #fff;
+  }
+  
+  .btnazuriraj {
+    background-color: #5cb85c;
+    color: #fff;
+  }
+  
+  /* Style error message */
+  .error-message {
+    color: #d9534f;
+    margin-top: 10px;
+  }
+  

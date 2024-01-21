@@ -1,0 +1,12 @@
+<div>
+    <label for="username">Admin Username:</label>
+    <input type="text" id="username" [(ngModel)]="adminCredentials.username" />
+  
+    <label for="password">Admin Password:</label>
+    <input type="password" id="password" [(ngModel)]="adminCredentials.password" />
+  
+    <button (click)="login()">Admin Login</button>
+  
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  </div>
+   

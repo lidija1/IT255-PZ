@@ -1,0 +1,37 @@
+.navbar {
+    background-color: #333; /* Boja pozadine */
+    padding: 10px; /* Razmak između ruba i stavki unutar navbara */
+}
+
+.navbar ul {
+    list-style-type: none; /* Uklanja točke (bullet points) sa stavki */
+    margin: 0;
+    padding: 0;
+    display: flex; /* Prikazuje stavke u redoslijedu */
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar li {
+    margin-right: 40px; /* Razmak između stavki */
+    margin-left: 40px;
+    // border: 1px solid white;
+}
+
+.navbar a {
+    text-decoration: none; /* Uklanja podvlaku ispod teksta */
+    color: white; /* Boja teksta */
+    // font-weight: bold; /* Debljina teksta */
+    font-size: 18px;
+    padding: 10px;
+    // border: 1px solid white;
+    
+}
+
+.navbar a:hover {
+    color: #007bff; /* Boja teksta na hover efektu */
+}
+.navbar a.active {
+      /* Postavi svetloplavu boju na odabrani element */
+    color: #54d4fe;; /* Promijeni boju teksta za bolju vidljivost na svetloplavoj pozadini */
+}
