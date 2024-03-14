@@ -1,8 +1,9 @@
+<button class="logout" (click)="logout()">Logout</button>
 <table *ngIf="letovi">
   <thead>
       <tr>
-          <th>Od</th>
-          <th>destinacija</th>
+          <th>Polazak iz</th>
+          <th>Destinacija</th>
           <th>Vreme</th>
           <th>Broj putnika</th>
           <th>Cena</th>
@@ -15,7 +16,7 @@
           <td>{{letov.destinacija}}</td>
           <td>{{letov.vreme}}</td>
           <td>{{letov.brojputnika}}</td>
-          <td>{{letov.cena}}</td>
+          <td>{{letov.cena}} <b>RSD</b></td>
           <td>
               <button (click)="azurirajLet(letov)">Ažuriraj</button>
               <button (click)="obrisiLet(letov.id)">Obriši</button>
@@ -28,26 +29,26 @@
 </div>
 
 <form [formGroup]="letForm">
-  <div>
+  <div class="forma">
 
 
-      <label for="marka">Od</label>
+      <label for="marka">Polazak iz</label>
       <input type="text" formControlName="od" id="od" name="od" required>
       <div class="validacija" *ngIf="letForm.get('od')?.hasError('required') && letForm.get('od')?.touched">
-          OD je obavezna.
+          Polazak iz je obavezno polje.
       </div>
 
 
-      <label for="destinacija">destinacija</label>
+      <label for="destinacija">Destinacija</label>
       <input type="text" formControlName="destinacija" id="destinacija" name="destinacija" required>
       <div class="validacija" *ngIf="letForm.get('destinacija')?.hasError('required') && letForm.get('destinacija')?.touched">
-          destinacija je obavezan.
+          Destinacija je obavezno polje.
       </div>
 
-      <label for="vreme">vreme</label>
+      <label for="vreme">Vreme</label>
       <input type="text" formControlName="vreme" id="vreme" name="vreme" required>
       <div class="validacija" *ngIf="letForm.get('vreme')?.hasError('required') && letForm.get('vreme')?.touched">
-          vreme je obavezan.
+          Vreme je obavezno polje.
       </div>
 
 
@@ -55,28 +56,26 @@
       <input type="number" formControlName="brojputnika" id="brojputnika" name="brojputnika" required>
       <div class="validacija"
           *ngIf="letForm.controls['brojputnika']?.hasError('required') && letForm.controls['brojputnika']?.touched">
-          brojputnika je obavezna.
+          Broj putnika je obavezno polje.
       </div>
       <div class="validacija"
           *ngIf="letForm && letForm.controls['brojputnika']?.hasError('min') && letForm.controls['brojputnika']?.touched">
-          brojputnika ne sme biti manja od 0.
+          Broj putnika ne sme biti manja od 0.
       </div>
       <div class="validacija"
           *ngIf="letForm && letForm.controls['brojputnika'] && letForm.controls['brojputnika']?.hasError('pattern') && letForm.controls['brojputnika']?.touched">
           Unesite validnu numeričku vrednost.
       </div>
 
-
-
       <label for="cena">Cena</label>
       <input type="number" formControlName="cena" id="cena" name="cena" required>
       <div class="validacija"
           *ngIf="letForm.controls['cena']?.hasError('required') && letForm.controls['cena']?.touched">
-          cena je obavezna.
+          Cena je obavezno polje.
       </div>
       <div class="validacija"
           *ngIf="letForm && letForm.controls['cena']?.hasError('min') && letForm.controls['cena']?.touched">
-          cena ne sme biti manja od 0.
+          Cena ne sme biti manja od 0.
       </div>
       <div class="validacija"
           *ngIf="letForm && letForm.controls['cena'] && letForm.controls['cena']?.hasError('pattern') && letForm.controls['cena']?.touched">

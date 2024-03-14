@@ -1,6 +1,7 @@
 {
   "name": "it255-pz",
   "version": "0.0.0",
+  "type": "commonjs",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

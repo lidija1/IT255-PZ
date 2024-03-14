@@ -1,0 +1,65 @@
+/* Osnovni stil za kontejner sa kartama detalja */
+.karta-detalji {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    width: 300px;
+    margin: auto;
+    margin-top: 100px;
+  }
+  .checkbox-wrapper {
+    display: flex; /* Koristi fleksibilni kontejner kako bi elementi bili jedan pored drugog */
+    align-items: center; /* Centriraj elemente vertikalno unutar kontejnera */
+    margin-top: 10px; /* Dodaj malo razmaka iznad checkbox-a (prilagodite prema potrebi) */
+  }
+  .checkbox-wrapper label {
+    margin-right: 10px;
+    width: 200px;
+  }
+  /* Stil za naslov */
+  .karta-detalji h2 {
+    color: #333;
+  }
+  
+  /* Stil za paragrafe */
+  .karta-detalji p {
+    margin: 5px 0;
+  }
+  
+  /* Stil za labelu i input polje */
+  .karta-detalji label {
+    display: block;
+    margin: 5px 0;
+  }
+  
+  .karta-detalji input {
+    width: 90%;
+    padding: 5px;
+    margin: 5px 0;
+  }
+  
+  /* Stil za paragraf sa ukupnom cenom */
+  .karta-detalji .ukupna-cena {
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  /* Stil za dugme */
+  .karta-detalji button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .karta-detalji button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Dodatni stil za dodatni paragraf */
+  .karta-detalji .dodatni-paragraf {
+    color: #777;
+    margin-top: 20px;
+  }
+  

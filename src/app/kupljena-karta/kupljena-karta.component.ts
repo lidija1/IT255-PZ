@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-kupljena-karta',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./kupljena-karta.component.scss']
 })
 export class KupljenaKartaComponent {
+
+  constructor(private router: Router) {}
+
+  nazadNaPocetnu() {
+    // Navigiraj nazad na početnu stranicu ili drugu željenu stranicu
+    this.router.navigate(['/pocetna']);
+  }
 
 }

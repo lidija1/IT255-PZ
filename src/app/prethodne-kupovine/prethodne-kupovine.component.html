@@ -1,0 +1,28 @@
+
+   <!-- prethodne-kupovine.component.html -->
+
+<table class="custom-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Od</th>
+        <th>Destinacija</th>
+        <th>Vreme</th>
+        <th>Broj Putnika</th>
+        <th>Željeni Prtljag</th>
+        <th>Ukupna Cena</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let kupovina of kupovine">
+        <td>{{ kupovina.id }}</td>
+        <td>{{ kupovina.od }}</td>
+        <td>{{ kupovina.destinacija }}</td>
+        <td>{{ kupovina.vreme }}</td>
+        <td>{{ kupovina.brojputnika }}</td>
+        <td>{{ kupovina.zeljeniPrtljag ? 'Da' : 'Ne' }}</td>
+        <td>{{ kupovina.ukupnaCena }} <b>RSD</b></td>
+      </tr>
+    </tbody>
+  </table>
+  

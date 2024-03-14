@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RestService } from '../services/rest.service';
-import { FlightService } from '../services/flight.service';
+// import { FlightService } from '../services/flight.service';
 import { HttpClient } from '@angular/common/http';
 import { Let } from '../models/flights.model';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-admin',
@@ -21,7 +22,7 @@ export class AdminComponent implements OnInit {
   };
 
 
-  constructor(private http: HttpClient, private fb: FormBuilder, private restService: RestService) {
+  constructor( private authService: AuthService, private http: HttpClient, private fb: FormBuilder, private restService: RestService) {
     this.letForm = this.fb.group({
       od: ['', Validators.required],
       destinacija: ['', Validators.required],
@@ -57,7 +58,10 @@ export class AdminComponent implements OnInit {
       this.letovi = data;
     });
   }
-
+  logout() {
+    // Pozivamo logout metodu iz AuthService
+    this.authService.logout();
+  }
 
   dodajLet() {
     if (!this.letForm) {
@@ -117,7 +121,7 @@ export class AdminComponent implements OnInit {
   //dugme u tabeli da bi se peokazali podaci koji treba da se azuriraju
   async azurirajLet(letovi: Let): Promise<void> {
     this.refreshLet();
-    console.log('Vrednost izabranog telefona (pre postavljanja):', letovi);
+    console.log('Vrednost izabranog leta (pre postavljanja):', letovi);
 
     // Postavi vrednosti forme na osnovu izabranog telefona
     this.letForm.patchValue({

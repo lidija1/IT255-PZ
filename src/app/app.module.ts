@@ -1,18 +1,22 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
+//komponente
 import { OKompanijiComponent } from './o-kompaniji/o-kompaniji.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './login/login.component';
-import { HttpClientModule } from '@angular/common/http';
 import { AdminComponent } from './admin/admin.component';
-import { CommonModule } from '@angular/common';
 import { ListaLetovaComponent } from './lista-letova/lista-letova.component';
 import { KupovanjeKarteComponent } from './kupovanje-karte/kupovanje-karte.component';
 import { KupljenaKartaComponent } from './kupljena-karta/kupljena-karta.component';
+import { AuthGuard } from './services/auth.guard';
+import { PrethodneKupovineComponent } from './prethodne-kupovine/prethodne-kupovine.component';
 
 
 @NgModule({
@@ -24,7 +28,8 @@ import { KupljenaKartaComponent } from './kupljena-karta/kupljena-karta.componen
     AdminComponent,
     ListaLetovaComponent,
     KupovanjeKarteComponent,
-    KupljenaKartaComponent
+    KupljenaKartaComponent,
+    PrethodneKupovineComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +39,7 @@ import { KupljenaKartaComponent } from './kupljena-karta/kupljena-karta.componen
     HttpClientModule,
     CommonModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,8 @@
 .navbar {
-    background-color: #333; /* Boja pozadine */
-    padding: 10px; /* Razmak između ruba i stavki unutar navbara */
+    background-color: #00b2de; /* Boja pozadine */
+    padding: 15px; /* Razmak između ruba i stavki unutar navbara */
+    margin: -10px;
+    margin-bottom: 10px;
 }
 
 .navbar ul {
@@ -20,7 +22,7 @@
 
 .navbar a {
     text-decoration: none; /* Uklanja podvlaku ispod teksta */
-    color: white; /* Boja teksta */
+    color: rgb(0, 0, 0); /* Boja teksta */
     // font-weight: bold; /* Debljina teksta */
     font-size: 18px;
     padding: 10px;
@@ -29,9 +31,9 @@
 }
 
 .navbar a:hover {
-    color: #007bff; /* Boja teksta na hover efektu */
+    color: #5993c2; /* Boja teksta na hover efektu */
 }
 .navbar a.active {
       /* Postavi svetloplavu boju na odabrani element */
-    color: #54d4fe;; /* Promijeni boju teksta za bolju vidljivost na svetloplavoj pozadini */
+    color: #ffffff; /* Promijeni boju teksta za bolju vidljivost na svetloplavoj pozadini */
 }

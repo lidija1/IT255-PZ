@@ -19,18 +19,30 @@ table {
   button {
     padding: 5px 10px;
     cursor: pointer;
-    background-color: #4caf50;
+    background-color:#009dff;
     color: white;
     border: none;
+    border-radius: 7px;
+    padding: 10px;
   }
   
   button:hover {
-    background-color: #45a049;
+    background-color: hsl(213, 100%, 50%);
   }
-  
+  .sortiraj{
+    margin-left: 100px;
+  }
   /* Dodatni stil za loading poruku */
   div[loading] {
     text-align: center;
     margin-top: 20px;
   }
-  
+  body{
+    background-color: rgb(178, 178, 194);
+  }
+  .custom-input {
+    padding: 8px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }

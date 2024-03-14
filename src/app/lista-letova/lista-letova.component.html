@@ -1,8 +1,10 @@
+<input type="text" [(ngModel)]="pretraga" placeholder="Unesite kriterijum pretrage" class="custom-input">
+<button (click)="pretrazi()">Pretraži</button> <button (click)="toggleSortiranjePoCeni()" class="sortiraj">Sortiraj po ceni</button>
 <table *ngIf="letovi">
     <thead>
         <tr>
             <th>Od</th>
-            <th>destinacija</th>
+            <th>Destinacija</th>
             <th>Vreme</th>
             <th>Broj putnika</th>
             <th>Cena</th>
@@ -15,7 +17,7 @@
             <td>{{letov.destinacija}}</td>
             <td>{{letov.vreme}}</td>
             <td>{{letov.brojputnika}}</td>
-            <td>{{letov.cena}}</td>
+            <td>{{letov.cena}} <b>RSD</b></td>
             <td>
                 <button (click)="kupiKartu(letov.id)">Kupi kartu</button>
             </td>

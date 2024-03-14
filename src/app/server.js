@@ -2,29 +2,19 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const cors = require('cors');
-// const Sequelize = require('sequelize');
-const { Sequelize, DataTypes } = require('sequelize');
 
 const port = 3000;
 
 const app = express();
 app.use(cors());
 
-// Konfiguracija MySQL baze podataka
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'metair'
+  database: 'metair',
 });
 
-const sequelize = new Sequelize('metair', 'root', '', {
-  host: 'localhost',
-  dialect: 'mysql'
-});
-
-
-// Povezivanje sa bazom
 db.connect((err) => {
   if (err) {
     console.log('Unable to connect to the database:', err);
@@ -33,7 +23,6 @@ db.connect((err) => {
   }
 });
 
-// Omogućavanje JSON parsiranja za POST zahteve
 app.use(bodyParser.json());
 
 app.post('/login', (req, res) => {
@@ -52,72 +41,88 @@ app.post('/login', (req, res) => {
   });
 });
 
-
-const Flight = sequelize.define('flight', {
-  id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  od: Sequelize.STRING,
-  destinacija: Sequelize.STRING,
-  vreme: Sequelize.STRING,
-  brojputnika: Sequelize.INTEGER,
-  cena: Sequelize.INTEGER,
+app.get('/kupovine', (req, res) => {
+  const query = 'SELECT `id`, `od`, `destinacija`, `vreme`, `brojputnika`, `zeljeniPrtljag`, `ukupnaCena` FROM `kupovine`';
+  db.query(query, (error, results) => {
+    if (error) {
+      console.error('Error executing MySQL query:', error);
+      res.status(500).send('Internal Server Error');
+    } else {
+      res.json(results);
+    }
+  });
 });
 
-app.get('/kupovanje-karte/:id', async (req, res) => {
+
+
+// Endpoint za čuvanje kupovine
+app.post('/sacuvaj-kupovinu', (req, res) => {
+  const { od, destinacija, vreme, brojputnika, zeljeniPrtljag, ukupnaCena } = req.body;
+
+  const query = `INSERT INTO kupovine (od, destinacija, vreme, brojputnika, zeljeniPrtljag, ukupnaCena) 
+                 VALUES (?, ?, ?, ?, ?, ?)`;
+
+  db.query(query, [od, destinacija, vreme, brojputnika, zeljeniPrtljag, ukupnaCena], (err, result) => {
+    if (err) {
+      console.error('Error saving purchase:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      console.log('Purchase saved successfully');
+      res.status(200).send('OK');
+    }
+  });
+});
+
+
+app.get('/kupovanje-karte/:id', (req, res) => {
+  const id = req.params.id;
+  const query = `SELECT * FROM flights WHERE id = ?`;
+
+  db.query(query, [id], (err, result) => {
+    if (err) {
+      console.error('Error querying database:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      if (result.length === 0) {
+        res.status(404).json({ error: 'Data not found' });
+      } else {
+        res.status(200).json(result[0]);
+      }
+    }
+  });
+});
+
+
+
+
+
+
+app.post('/kupovanje-karte/:id', async (req, res) => {
   const id = parseInt(req.params.id);
+  const brojPutnika = req.body.brojPutnika;
 
   try {
-    // Povuci podatke iz baze za određeni id
-    const letZaId = await Flight.findByPk(id);
+    // const letZaId = await Let.findByPk(id);
+    const letZaId = await getLetById(id);
 
     if (letZaId) {
-      res.json(letZaId);
+      if (letZaId.brojputnika >= brojPutnika) {
+        await letZaId.update({ brojputnika: letZaId.brojputnika - brojPutnika });
+
+        res.json({ success: true, message: 'Uspešno kupljena karta.' });
+      } else {
+        res.status(400).json({ success: false, message: 'Nema dovoljno slobodnih mesta.' });
+      }
     } else {
-      res.status(404).json({ error: 'Let nije pronađen.' });
+      res.status(404).json({ success: false, message: 'Let nije pronađen.' });
     }
   } catch (error) {
-    console.error('Greška pri čitanju iz baze:', error);
-    res.status(500).json({ error: 'Greška pri čitanju iz baze.' });
+    console.error('Greška pri kupovini karte:', error);
+    res.status(500).json({ success: false, message: 'Greška pri kupovini karte.' });
   }
 });
 
-
-// app.get('/kupovanje-karte/:id', (req, res) => {
-//   // Ovde je potrebno dohvatiti podatke o letovima
-//   // i zatim ih proslediti na odgovarajući način.
-
-//   // Primer:
-//   const letovi = getLetovi(); // Funkcija koja dohvata podatke o letovima
-//   const id = req.params.id;
-//   const selectedLet = letovi.find(let => let.id === id);
-
-//   if (selectedLet) {
-//     res.json(selectedLet);
-//   } else {
-//     res.status(404).send('Let nije pronađen.');
-//   }
-// // });
-// app.get('/kupovanje-karte/:id', (req, res) => {
-//   const id = parseInt(req.params.id);
-
-//   const letZaId = letovi.find(leto => leto.id === id);
-
-//   if (letZaId) {
-//     res.json(letZaId);
-//   } else {
-//     res.status(404).json({ error: 'Let nije pronađen.' });
-//   }
-// });
-
-
-
-
-
-// Endpoint za čitanje svih letova
-app.get('/letovi', (req, res) => {
+app.get('/admin', (req, res) => {
   db.query('SELECT * FROM flights', (err, result) => {
     if (err) {
       console.log('Error reading flights from the database:', err);
@@ -128,9 +133,8 @@ app.get('/letovi', (req, res) => {
   });
 });
 
-// Endpoint za dodavanje novog telefona
-app.post('/letovi', (req, res) => {
-  const { od, destinacija, vreme, brojputnika, cena} = req.body;
+app.post('/admin', (req, res) => {
+  const { od, destinacija, vreme, brojputnika, cena } = req.body;
 
   db.query('INSERT INTO flights (od, destinacija, vreme, brojputnika, cena) VALUES (?, ?, ?, ?, ?)', [od, destinacija, vreme, brojputnika, cena], (err, result) => {
     if (err) {
@@ -138,18 +142,19 @@ app.post('/letovi', (req, res) => {
       res.status(500).send('Error adding a new phone to the database');
     } else {
       const insertedLetId = result.insertId;
-      console.log('Inserted let:', { id: insertedLetId, od, destinacija, vreme, brojputnika, cena});
+      console.log('Inserted let:', { id: insertedLetId, od, destinacija, vreme, brojputnika, cena });
       res.json({ id: insertedLetId, od, destinacija, vreme, brojputnika, cena });
     }
   });
 });
 
-// Endpoint za ažuriranje letova
-app.put('/letovi/:id', (req, res) => {
+//ovde mozda i dole ide ketoviu
+app.put('/admin/:id', (req, res) => {
   const id = req.params.id;
-  const { od, destinacija, vreme, brojputnika, cena} = req.body;
+  const { od, destinacija, vreme, brojputnika, cena } = req.body;
 
-  db.query('UPDATE flights SET od=?, destinacija=?, vreme=?, brojputnika=?, cena=? WHERE id=?', [od, destinacija, vreme, brojputnika, cena, id], (err) => {
+  db.query('UPDATE flights SET od=?, destinacija=?, vreme=?, brojputnika=?, cena=? WHERE id=?', [od, destinacija, vreme, brojputnika,
+    cena, id], (err) => {
     if (err) {
       console.log('Error updating the phone in the database:', err);
       res.status(500).send('Error updating the phone in the database');
@@ -159,8 +164,7 @@ app.put('/letovi/:id', (req, res) => {
   });
 });
 
-// Endpoint za brisanje letova
-app.delete('/letovi/:id', (req, res) => {
+app.delete('/admin/:id', (req, res) => {
   const id = req.params.id;
 
   db.query('DELETE FROM flights WHERE id=?', [id], (err) => {
@@ -173,58 +177,8 @@ app.delete('/letovi/:id', (req, res) => {
   });
 });
 
-
-
-
-
-// app.get('/flights', (req, res) => {
-//   const sql = 'SELECT * FROM flights';
-//   db.query(sql, (err, flights) => {
-//     if (err) {
-//       res.status(500).send(err);
-//     } else {
-//       res.status(200).json(flights);
-//     }
-//   });
-// });
-
-// app.post('/flights', (req, res) => {
-//   const { name, destination } = req.body;
-//   const sql = 'INSERT INTO flights (name, destination) VALUES (?, ?)';
-//   db.query(sql, [name, destination], (err, result) => {
-//     if (err) {
-//       res.status(500).send(err);
-//     } else {
-//       res.status(201).json({ id: result.insertId });
-//     }
-//   });
-// });
-
-// app.put('/flights/:id', (req, res) => {
-//   const flightId = req.params.id;
-//   const { name, destination } = req.body;
-//   const sql = 'UPDATE flights SET name = ?, destination = ? WHERE id = ?';
-//   db.query(sql, [name, destination, flightId], (err, result) => {
-//     if (err) {
-//       res.status(500).send(err);
-//     } else {
-//       res.status(200).json({ id: flightId });
-//     }
-//   });
-// });
-
-// app.delete('/flights/:id', (req, res) => {
-//   const flightId = req.params.id;
-//   const sql = 'DELETE FROM flights WHERE id = ?';
-//   db.query(sql, [flightId], (err, result) => {
-//     if (err) {
-//       res.status(500).send(err);
-//     } else {
-//       res.status(200).json({ id: flightId });
-//     }
-//   });
-// });
-
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+

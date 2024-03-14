@@ -1,0 +1,28 @@
+/* Dodajte ovaj stil za osnovni izgled tabele */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+  }
+  
+  thead {
+    background-color: #f2f2f2;
+  }
+  
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Dodajte stil za naizmenično bojenje redova */
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  /* Dodajte stil za hover efekat na redovima */
+  tbody tr:hover {
+    background-color: #e0e0e0;
+  }
+  
